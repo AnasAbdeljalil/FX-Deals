@@ -1,4 +1,4 @@
-package com.xx.fx.deals;
+package com.progresssoft.fx.deals;
 
 import java.util.Map;
 import java.util.stream.Collectors;

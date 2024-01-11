@@ -1,4 +1,4 @@
-package com.xx.fx.deals;
+package com.progresssoft.fx.deals;
 
 public class CurrencyAmount {
 	private String currency;

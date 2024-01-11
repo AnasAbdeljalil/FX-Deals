@@ -1,4 +1,4 @@
-package com.xx.fx.deals;
+package com.progresssoft.fx.deals;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,8 +18,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class Facade {
 
-	@Autowired
-	private DataAccess dao;
+//	@Autowired
+//	private DataAccess dao;
 
 	private Logger logger = LoggerFactory.getLogger(Facade.class);
 
@@ -38,13 +38,20 @@ public class Facade {
 
 	////////////////////////////////////////////////////////////////////////////////
 	private void insertIntoDataBase(FxDealRequest fxDealRequest) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("DEAL_UNIQUE_ID", fxDealRequest.getDealUniqueId());
-		map.put("DEAL_TO_CURRENCY", fxDealRequest.getToCurrency());
-		map.put("DEAL_AMMOUNTS", fxDealRequest.getDealAmmounts().toString());
-//		map.put("DEAL_TIMESTAMP", fxDealRequest.getDealTimestamp());
-		map.put("DEAL_FROM_CURRENCIES", fxDealRequest.getFromCurrencies().toString());
-		dao.insertRequest("FX_DEALS", map);
+		try {
+			logger.info("importDeal({})", fxDealRequest.toString());
+			Map<String, Object> map = new HashMap<>();
+			map.put("DEAL_UNIQUE_ID", fxDealRequest.getDealUniqueId());
+			map.put("DEAL_TO_CURRENCY", fxDealRequest.getToCurrency());
+			map.put("DEAL_AMMOUNTS", fxDealRequest.getDealAmmounts().toString());
+//			map.put("DEAL_TIMESTAMP", fxDealRequest.getDealTimestamp());
+			map.put("DEAL_FROM_CURRENCIES", fxDealRequest.getFromCurrencies().toString());
+//			dao.insertRequest("FX_DEALS", map);
+
+		} finally {
+			logger.info("/importDeal({})", fxDealRequest.toString());
+			// TODO: handle finally clause
+		}
 	}
 
 	////////////////////////////////////////////////////////////////////////////////
@@ -88,7 +95,8 @@ public class Facade {
 		}
 
 		if (!isTimestampInFormat(fxDealRequest.getDealTimestamp())) {
-			MsUtil.throww(new FxRequestException("Deal Timestamp not formatted correctlly!!, Should be yyyy-MM-dd HH:mm:ss"));
+			MsUtil.throww(
+					new FxRequestException("Deal Timestamp not formatted correctlly!!, Should be yyyy-MM-dd HH:mm:ss"));
 		}
 
 		if (!isValidIsoCode(fxDealRequest)) {

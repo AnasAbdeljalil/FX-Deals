@@ -1,4 +1,4 @@
-package com.xx.fx.deals;
+package com.progresssoft.fx.deals;
 
 public class ErrorResponseDTO {
 	private String code;
